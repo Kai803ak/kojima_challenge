@@ -45,14 +45,11 @@ def name_edit():
         print("")
         if EDIT_chosen == "1":
             EDIT_num = int(input("何番目の人を編集しますか？:"))
-            EDIT_name = input("新しい名前を命名してください:")
-            name[EDIT_num] = EDIT_name
+            name[EDIT_num] = input("新しい名前を命名してください:")
             print("編集が完了しました")
         elif EDIT_chosen == "2":
-            print("追加したい名前を命名してください:")
-            name.append(input())
+            name.append(input("追加したい名前を命名してください:"))
             print("追加が完了しました")
-            print(name)
         elif EDIT_chosen == "3":
             rm_num = int(input("抹消したい名前の番号を入力してください:"))
             name.pop(rm_num)
@@ -64,7 +61,6 @@ def name_edit():
             print("編集を終了します")
         else:
             print("1~5で入力してください")
-            EDIT_chosen = "0"
 
 global write_data
 def write_data():
@@ -99,10 +95,15 @@ if os.path.isfile("name_list.txt") == True:
         first_run()
 else:
     opennamefile = False
+    first_run()
 
 global loop
 loop = True
 list_show = True
+global success
+global failed
+success = 0
+failed = 0
 while loop == True:
     if list_show == True:
         show_list()
@@ -121,8 +122,6 @@ while loop == True:
         LOOP_filename = ("kojima_") + str(datetime.datetime.now().strftime('%Y%m%d%H%M')) + (".txt")
         LOOP_file = open(LOOP_filename,'w')
         LOOP_times = 0
-        global success
-        global failed
         success = 0
         failed = 0
         NONSTOP = True
