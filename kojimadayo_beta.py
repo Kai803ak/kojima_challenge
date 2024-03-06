@@ -2,6 +2,7 @@ import random
 import os
 import datetime
 
+#リスト表示
 global show_list
 def show_list():
     print("")
@@ -13,6 +14,7 @@ def show_list():
     print("")
 
 
+#シャッフル実行
 def shuffle_run():
     global success
     global failed
@@ -31,6 +33,7 @@ def shuffle_run():
     return call,answ,success,failed
 
 
+#名前編集
 def name_edit():
     global EDIT_loop
     EDIT_loop = True
@@ -62,6 +65,7 @@ def name_edit():
         else:
             print("1~5で入力してください")
 
+#データ書き込み
 global write_data
 def write_data():
     global name
@@ -78,14 +82,49 @@ def write_data():
     name = name_file.read().splitlines()
     return name
 
+#内容orファイルなしのときの初期設定
 global first_run
 def first_run():
     global name
     name = ['矢島','田島','小島','大島','輪島','川島','三島']
     write_data()
     print("(初期名前の書き込みが完了しました)")
-    
+
+#ループシャッフル実行
+global LOOP
+def shuffle_LOOP():
+    while loop == True:
+        print("")
+        print("ファイルに書き込みますか？")
+        print("1:はい  2:いいえ")
+        file_write = int(input("行いたい操作を選んでください:"))
+        if file_write == 1:
+            break
+        elif file_write == 2:
+            break
+        else:
+            print("1または2で入力してください。")
+    if file_write == 1:
+        LOOP_filename = ("kojima_") + str(datetime.datetime.now().strftime('%Y%m%d%H%M')) + (".txt")
+        LOOP_file = open(LOOP_filename,'w')
+    LOOP_times = 0
+    LOOP_settime = int(input("何回実行するか入力してください:"))
+    LOOPING = True
+    while LOOPING == True:
+        result = shuffle_run()
+        LOOP_times +=1
+        if file_write == 1:
+            LOOP_file.write(str(result[0]) + '\n' + str(result[1]) + '\n' + '\n')
+        if LOOP_times == LOOP_settime:
+            if file_write == 1:
+                LOOP_file.write("成功回数:" + str(result[2]) + "回" + '\n' + "失敗回数:" + str(result[3]) + "回")
+                LOOP_file.close()
+            print("成功回数:" + str(result[2]) + "回")
+            print("失敗回数:" + str(result[3]) + "回")
+            LOOPING = False
+        
 #main
+#ファイルの存在確認
 global opennamefile
 if os.path.isfile("name_list.txt") == True:
     opennamefile = True
@@ -97,6 +136,7 @@ else:
     opennamefile = False
     first_run()
 
+#定義
 global loop
 loop = True
 list_show = True
@@ -104,12 +144,14 @@ global success
 global failed
 success = 0
 failed = 0
+
+#メニュー
 while loop == True:
     if list_show == True:
         show_list()
     print("")
     print("1:チャレンジする！")
-    print("2:100回連続チャレンジをしてファイルに書き込む！")
+    print("2:連続チャレンジをする！")
     print("3:名前をいじる！")
     print("4:もうあきた帰る")
     print("")
@@ -119,23 +161,9 @@ while loop == True:
         shuffle_run()
     elif chosen == "2":
         list_show = False
-        LOOP_filename = ("kojima_") + str(datetime.datetime.now().strftime('%Y%m%d%H%M')) + (".txt")
-        LOOP_file = open(LOOP_filename,'w')
-        LOOP_times = 0
         success = 0
         failed = 0
-        NONSTOP = True
-        while NONSTOP == True:
-            result = shuffle_run()
-            LOOP_times +=1
-            LOOP_file.write(str(result[0]) + '\n')
-            LOOP_file.write(str(result[1]) + '\n')
-            LOOP_file.write('\n')
-            if LOOP_times == 100:
-                LOOP_file.write("成功回数:" + str(success) + "回" + '\n')
-                LOOP_file.write("失敗回数:" + str(failed) + "回")
-                NONSTOP = False
-        LOOP_file.close()
+        shuffle_LOOP()
     elif chosen == "3":
         list_show = False
         name_edit()
@@ -143,4 +171,3 @@ while loop == True:
         exit()
     else:
         print("1~4で入力してください")
-        chosen = "0"
