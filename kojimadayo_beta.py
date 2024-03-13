@@ -7,10 +7,8 @@ global show_list
 def show_list():
     print("")
     print("現在のリストを表示します")    
-    list_num = 0
-    for list_name in name:
-        print(str(list_num) + ")" + str(list_name))
-        list_num += 1
+    for list_num in range(len(name)):
+        print(str(list_num) + ")" + str(name[list_num]))
     print("")
 
 
@@ -140,8 +138,6 @@ else:
 global loop
 loop = True
 list_show = True
-global success
-global failed
 success = 0
 failed = 0
 
