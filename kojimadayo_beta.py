@@ -91,7 +91,7 @@ def first_run():
 #ループシャッフル実行
 global LOOP
 def shuffle_LOOP():
-    while loop == True:
+    while True:
         print("")
         print("ファイルに書き込みますか？")
         print("1:はい  2:いいえ")
@@ -107,8 +107,7 @@ def shuffle_LOOP():
         LOOP_file = open(LOOP_filename,'w')
     LOOP_times = 0
     LOOP_settime = int(input("何回実行するか入力してください:"))
-    LOOPING = True
-    while LOOPING == True:
+    while True:
         result = shuffle_run()
         LOOP_times +=1
         if file_write == 1:
@@ -119,7 +118,7 @@ def shuffle_LOOP():
                 LOOP_file.close()
             print("成功回数:" + str(result[2]) + "回")
             print("失敗回数:" + str(result[3]) + "回")
-            LOOPING = False
+            break
         
 #main
 #ファイルの存在確認
@@ -135,14 +134,12 @@ else:
     first_run()
 
 #定義
-global loop
-loop = True
 list_show = True
 success = 0
 failed = 0
 
 #メニュー
-while loop == True:
+while True:
     if list_show == True:
         show_list()
     print("")
