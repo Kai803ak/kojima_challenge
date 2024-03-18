@@ -33,9 +33,7 @@ def shuffle_run():
 
 #名前編集
 def name_edit():
-    global EDIT_loop
-    EDIT_loop = True
-    while EDIT_loop == True:
+    while True:
         show_list()
         print("1:編集する！")
         print("2:追加する！")
@@ -57,9 +55,9 @@ def name_edit():
         elif EDIT_chosen == "4":
             first_run()
         elif EDIT_chosen == "5":
-            EDIT_loop = False
             write_data()
             print("編集を終了します")
+            break
         else:
             print("1~5で入力してください")
 
